@@ -35,7 +35,8 @@
                     class="w3-input w3-border w3-round-large"
                     name="txtLogin"
                     type="text"
-                    placeholder="Login CPF (ex.:11111111111)">
+                    placeholder="Login CPF (ex.:11111111111)"
+                    required>
             </div>
         </div>
 
@@ -49,7 +50,8 @@
                     class="w3-input w3-border w3-round-large"
                     name="txtSenha"
                     type="password"
-                    placeholder="Senha"> <!-- verificar required !!!!! -->
+                    placeholder="Senha"
+                    required> <!-- verificar required !!!!! -->
             </div>
         </div>
 
@@ -69,8 +71,11 @@
                     name="btnPrimeiroAcesso"
                     type="submit"
                     style="width: 90%"> Primeiro Acesso ?
-
                 </button>
+            </div>
+            <div class="w3-center" style="width:auto;">
+                <button name="btnADM" class=" w3-block w3-margin w3-blue w3-cell w3-round-large"
+                    style="width: 90%;">Login como Administrador</button>
             </div>
         </div>
 

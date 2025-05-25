@@ -153,4 +153,41 @@ class Usuario
             return FALSE; // Retorna falso se a atualização falhar
         }
     }
+
+    public function gerarlista()
+    {
+        require_once 'ConexaoBD.php'; // inclusão da classe de conexão ConexaoBD
+        $con = new ConexaoBD(); // Cria uma nova instância da classe ConexaoBD
+        $conn = $con->conectar(); // Chama o método conectar() para obter a conexão com o banco de dados
+
+        // Verifica se a conexão foi bem-sucedida
+        if ($conn->connect_error) { // Verifica se houve erro na conexão
+            die("Connection failed: " . $conn->connect_error); // Se houver erro, exibe a mensagem de erro e encerra o script
+        }
+        $sql = "SELECT idusuario, nome FROM usuario;"; // Consulta SQL para selecionar todos os dados da tabela "usuario"
+        $re = $conn->query($sql); // Executa a consulta SQL e armazena o resultado na variável $re
+        $conn->close(); // Fecha a conexão com o banco de dados
+        return $re; // Retorna o resultado da consulta SQL
+    }
+
+    public function carregarPorId($id)
+    {
+        require_once 'ConexaoBD.php';
+        $con = new ConexaoBD();
+        $conn = $con->conectar();
+        if ($conn->connect_error) { // Verifica se houve erro na conexão
+            die("Connection failed: " . $conn->connect_error); // Se houver erro, exibe a mensagem de erro e encerra o script
+        }
+
+        $sql = "SELECT * FROM usuario WHERE idusuario = ?";
+
+        if ($row = $result->fetch()) {
+            $this->setID($row['idusuario']);
+            $this->setNome($row['nome']);
+            $this->setCpf($row['cpf']);
+            $this->setEmail($row['email']);
+            $this->setDataNascimento($row['dataNascimento']);
+            // Adicione outros campos conforme existirem no banco
+        }
+    }
 }

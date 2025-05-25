@@ -10,19 +10,19 @@ switch ($_POST) {
     case (isset($_POST[null])):
         include_once "View/login.php";
         break;
-        //acao botao inserir
+    //acao botao inserir
     case (isset($_POST["btnInfInserir"])):
         include_once "../View/principal.php";
         break;
-        //acao botao excluir
+    //acao botao excluir
     case (isset($_POST["btnInfExcluir"])):
         include_once "../View/principal.php";
         break;
-        //acao botao cadastronrealizado
+    //acao botao cadastronrealizado
     case (isset($_POST["btnCadNaoRealizado"])):
         include_once "../View/primeiroAcesso.php";
         break;
-        //acao botao atualizar usuario
+    //acao botao atualizar usuario
     case (isset($_POST["btnAtualizarUsuario"])):
         include_once "../View/atualizarUsuario.php";
         break;
@@ -118,7 +118,7 @@ switch ($_POST) {
         break;
 
 
-        //adicionar outras formacoes
+    //adicionar outras formacoes
 
     case (isset($_POST["btnAddOF"])):
         require_once "../Controller/outrasFormacoesController.php";
@@ -184,5 +184,29 @@ switch ($_POST) {
             include_once "../View/operacaoNaoRealizada.php";
         }
         break;
+
+    //açoes ADM
+    case isset($_POST["btnLoginADM"]):
+        require_once '../Controller/AdministradorController.php';
+        $aController = new AdministradorController();
+        if ($aController->login($_POST['txtLoginADM'], $_POST['txtSenhaADM'])) {
+            include_once '../View/ADMPrincipal.php';
+        }
+        break;
+    //login do adm
+    case isset($_POST["btnADM"]):
+        include_once "../View/ADMLogin.php";
+        break;
+    //listar users cadastrados
+    case isset($_POST["btnListarCadastrados"]):
+        include_once "../View/ADMListarCadastrados.php";
+        break;
+    //listar adms cadastrados
+    case isset($_POST["btnListarADMCadastrados"]):
+        include_once "../View/ADMListarAdministradores.php";
+        break;
+    //ação botao voltar
+    case isset($_POST["btnVoltar"]):
+        include_once "../View/ADMPrincipal.php";
+        break;
 }
-?>

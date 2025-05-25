@@ -49,5 +49,27 @@ class UsuarioController
             return false;
         }
     }
+    public function gerarLista()
+    {
+        require_once "../Model/Usuario.php";
+        $usuario = new Usuario();
+        $lista = $usuario->gerarLista();
+        return $lista;
+    }
+    
+    public function buscarPorId($id)
+{
+    require_once "../Model/Usuario.php";
+    $usuario = new Usuario();
+    $usuario->carregarPorId($id); // Este método você precisará criar na classe Usuario
+    return $usuario;
 }
-?>
+
+
+    
+
+   
+
+
+    
+}
