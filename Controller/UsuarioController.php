@@ -64,6 +64,13 @@ class UsuarioController
     $usuario->carregarPorId($id); // Este método você precisará criar na classe Usuario
     return $usuario;
 }
+/*
+public function listarTodos()
+    {
+        require_once "../Model/Usuario.php";
+        $usuario = new Usuario();
+        return $usuario->listarTodos(); // Este método será criado na classe Usuario
+    }*/
 
 
     

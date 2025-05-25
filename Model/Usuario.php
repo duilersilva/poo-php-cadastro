@@ -169,25 +169,67 @@ class Usuario
         $conn->close(); // Fecha a conexão com o banco de dados
         return $re; // Retorna o resultado da consulta SQL
     }
-
+    //método carregarporID
     public function carregarPorId($id)
+    {
+    require_once 'ConexaoBD.php';
+    $con = new ConexaoBD();
+    $conn = $con->conectar();
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    $sql = "SELECT * FROM usuario WHERE idusuario = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($row = $result->fetch_assoc()) {
+        $this->setID($row['idusuario']);
+        $this->setNome($row['nome']);
+        $this->setCpf($row['cpf']);
+        $this->setEmail($row['email']);
+        $this->setDataNascimento($row['dataNascimento']);
+        // Adicione outros campos conforme existirem no banco
+        $stmt->close();
+        $conn->close();
+        return true;
+    } else {
+        $stmt->close();
+        $conn->close();
+        return false;
+    }
+}
+
+    
+    public function listarTodos()
     {
         require_once 'ConexaoBD.php';
         $con = new ConexaoBD();
         $conn = $con->conectar();
-        if ($conn->connect_error) { // Verifica se houve erro na conexão
-            die("Connection failed: " . $conn->connect_error); // Se houver erro, exibe a mensagem de erro e encerra o script
-        }
+        $usuarios = [];
 
-        $sql = "SELECT * FROM usuario WHERE idusuario = ?";
+        $sql = "SELECT * FROM usuario";
+        $result = $conn->query($sql);
 
-        if ($row = $result->fetch()) {
-            $this->setID($row['idusuario']);
-            $this->setNome($row['nome']);
-            $this->setCpf($row['cpf']);
-            $this->setEmail($row['email']);
-            $this->setDataNascimento($row['dataNascimento']);
-            // Adicione outros campos conforme existirem no banco
+        if ($result) {
+            while ($row = $result->fetch_assoc()) {
+                $usuario = new Usuario();
+                $usuario->setID($row['idusuario']);
+                $usuario->setNome($row['nome']);
+                $usuario->setCpf($row['cpf']);
+                $usuario->setEmail($row['email']);
+                // Adicione outros campos conforme necessário
+                $usuarios[] = $usuario;
+            }
         }
+        $conn->close();
+        return $usuarios;
     }
 }
+
+    
+
+
+
