@@ -172,37 +172,37 @@ class Usuario
     //método carregarporID
     public function carregarPorId($id)
     {
-    require_once 'ConexaoBD.php';
-    $con = new ConexaoBD();
-    $conn = $con->conectar();
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+        require_once 'ConexaoBD.php';
+        $con = new ConexaoBD();
+        $conn = $con->conectar();
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        $sql = "SELECT * FROM usuario WHERE idusuario = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($row = $result->fetch_assoc()) {
+            $this->setID($row['idusuario']);
+            $this->setNome($row['nome']);
+            $this->setCpf($row['cpf']);
+            $this->setEmail($row['email']);
+            $this->setDataNascimento($row['dataNascimento']);
+            // Adicione outros campos conforme existirem no banco
+            $stmt->close();
+            $conn->close();
+            return true;
+        } else {
+            $stmt->close();
+            $conn->close();
+            return false;
+        }
     }
 
-    $sql = "SELECT * FROM usuario WHERE idusuario = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    $result = $stmt->get_result();
 
-    if ($row = $result->fetch_assoc()) {
-        $this->setID($row['idusuario']);
-        $this->setNome($row['nome']);
-        $this->setCpf($row['cpf']);
-        $this->setEmail($row['email']);
-        $this->setDataNascimento($row['dataNascimento']);
-        // Adicione outros campos conforme existirem no banco
-        $stmt->close();
-        $conn->close();
-        return true;
-    } else {
-        $stmt->close();
-        $conn->close();
-        return false;
-    }
-}
-
-    
     public function listarTodos()
     {
         require_once 'ConexaoBD.php';
@@ -227,9 +227,64 @@ class Usuario
         $conn->close();
         return $usuarios;
     }
+    //metodo getformacoes
+    public function getFormacoes()
+    {
+        require_once 'ConexaoBD.php';
+        $con = new ConexaoBD();
+        $conn = $con->conectar();
+        $formacoes = [];
+        $sql = "SELECT inicio, fim, descricao FROM formacaoacademica WHERE idusuario = ?";
+        $stmt = $conn->prepare($sql);
+        $id = $this->getID();
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        while ($row = $result->fetch_assoc()) {
+            $formacoes[] = $row;
+        }
+        $stmt->close();
+        $conn->close();
+        return $formacoes;
+    }
+    //metodo get experiencias
+    public function getExperiencias()
+    {
+        require_once 'ConexaoBD.php';
+        $con = new ConexaoBD();
+        $conn = $con->conectar();
+        $experiencias = [];
+        $sql = "SELECT inicio, fim, empresa, descricao FROM experienciaprofissional WHERE idusuario = ?";
+        $stmt = $conn->prepare($sql);
+        $id = $this->getID();
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        while ($row = $result->fetch_assoc()) {
+            $experiencias[] = $row;
+        }
+        $stmt->close();
+        $conn->close();
+        return $experiencias;
+    }
+    //metodo get outras formacoes
+    public function getOFormacoes()
+    {
+        require_once 'ConexaoBD.php';
+        $con = new ConexaoBD();
+        $conn = $con->conectar();
+        $experiencias = [];
+        $sql = "SELECT inicio, fim, descricao FROM outrasformacoes WHERE idusuario = ?";
+        $stmt = $conn->prepare($sql);
+        $id = $this->getID();
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        while ($row = $result->fetch_assoc()) {
+            $oformacoes[] = $row;
+        }
+        $stmt->close();
+        $conn->close();
+        return $oformacoes;
+    }
 }
-
-    
-
-
-

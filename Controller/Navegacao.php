@@ -209,4 +209,8 @@ switch ($_POST) {
     case isset($_POST["btnVoltar"]):
         include_once "../View/ADMPrincipal.php";
         break;
+
+    case isset($_POST["btnVisualizardados"]);
+    include_once "../View/ADMVisualizarCadastro.php";
+    break;
 }

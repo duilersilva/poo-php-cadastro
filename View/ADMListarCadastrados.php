@@ -42,9 +42,9 @@
                                 echo '<td style="width: 1%;">' . $row->idusuario . '</td>';
                                 echo '<td style="width:50%;">' . $row->nome . '</td>';
                                 echo '<td>';
-                                echo '<form action="ADMVisualizarCadastro.php" method="get">';
+                                echo '<form action="../View/ADMVisualizarCadastro.php" method="get">';
                                 echo '<input type="hidden" name="id" value="' . $row->idusuario . '">';
-                                echo '<button class="w3-button w3-blue w3-round-large" type="submit">Visualizar</button>';
+                                echo '<button  class="w3-button w3-blue w3-round-large" type="submit">Visualizar</button>';
                                 echo '</form>';
                                 echo '</td>';
                                 echo '</tr>';
